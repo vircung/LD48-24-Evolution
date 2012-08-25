@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using Assets.Scripts.Ship;
 
 public class Player : MonoBehaviour
 {
@@ -8,61 +9,62 @@ public class Player : MonoBehaviour
 
     // Priate fields
 
-    public float moveSpeed = 5.0f;
-    float startMoveSpeed = 1.0f;
-    float maxMoveSpeed = 20.0f;
-    float speedUpFactor = 0.001f;
-    bool playerMoves = false;
+    Ship ship;
+    GameObject prefab;
 
-    float deltaTime;
+    // GUI stuff
 
-    // Methods
+    #region System Methods
+
+    void Awake()
+    {
+        ship = new Ship();
+    }
+
+    void Start()
+    {
+        foreach (Hull part in ship.parts)
+        {
+            GameObject go = Instantiate(ship.prefab, part.position, Quaternion.identity) as GameObject;
+
+            go.transform.parent = gameObject.transform;
+        }
+    }
 
     void Update()
     {
-
-        deltaTime = Time.deltaTime;
-
         MovePlayer();
     }
 
+    #endregion
+
+    #region My Methods
+
     private void MovePlayer()
     {
-        playerMoves = false;
-        float dx = 0.0f;
-        float dy = 0.0f;
-
+        Vector3 dir = Vector3.zero;
         if (Input.GetKey(KeyCode.W))
         {
-            dy = 1.0f * moveSpeed * Time.deltaTime;
-            playerMoves = true;
+            dir += new Vector3(0.0f, 1.0f, 0.0f);
         }
         else if (Input.GetKey(KeyCode.S))
         {
-            dy = -1.0f * moveSpeed * Time.deltaTime;
-            playerMoves = true;
+            dir += new Vector3(0.0f, -1.0f, 0.0f);
         }
 
         if (Input.GetKey(KeyCode.A))
         {
-            dx = -1.0f * moveSpeed * Time.deltaTime;
-            playerMoves = true;
+            dir += new Vector3(-1.0f, 0.0f, 0.0f);
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            dx = 1.0f * moveSpeed * Time.deltaTime;
-            playerMoves = true;
+            dir += new Vector3(1.0f, 0.0f, 0.0f);
         }
 
-        if (playerMoves)
-        {
-            moveSpeed = Mathf.Lerp(moveSpeed, maxMoveSpeed, speedUpFactor);
-        }
-        else
-        {
-            moveSpeed = startMoveSpeed;
-        }
+        Debug.Log(dir);
 
-        transform.Translate(dx, dy, 0.0f);
+        ship.Move(this.gameObject, dir);
     }
+
+    #endregion
 }
