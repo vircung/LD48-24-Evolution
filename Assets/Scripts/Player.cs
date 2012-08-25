@@ -8,13 +8,13 @@ public class Player : MonoBehaviour
 
     // Priate fields
 
-    float moveSpeed = 5.0f;
+    public float moveSpeed = 5.0f;
     float startMoveSpeed = 1.0f;
     float maxMoveSpeed = 20.0f;
     float speedUpFactor = 0.001f;
     bool playerMoves = false;
 
-    public float deltaTime;
+    float deltaTime;
 
     // Methods
 
