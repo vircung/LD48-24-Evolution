@@ -9,8 +9,11 @@ public class Player : MonoBehaviour
 
     // Priate fields
 
-    Ship ship;
+    public Ship ship;
+    public Hashtable map;
+
     GameObject prefab;
+    private bool gameover = false;
 
     // GUI stuff
 
@@ -19,21 +22,38 @@ public class Player : MonoBehaviour
     void Awake()
     {
         ship = new Ship();
-    }
 
-    void Start()
-    {
+        map = new Hashtable();
         foreach (Hull part in ship.parts)
         {
-            GameObject go = Instantiate(ship.prefab, part.position, Quaternion.identity) as GameObject;
+            GameObject go = Instantiate(part.prefab, part.position, Quaternion.identity) as GameObject;
 
             go.transform.parent = gameObject.transform;
+            map.Add(go, part);
         }
     }
-
+    
     void Update()
     {
         MovePlayer();
+
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            ship.Fire(gameObject.transform.position);
+        }
+
+        if (ship.parts.Count <= 0)
+        {
+            gameover = true;
+        }
+    }
+
+    void OnGUI()
+    {
+        if (gameover)
+        {
+            GUI.Box(new Rect(50, 100, 150, 150), "GAME OVER");
+        }
     }
 
     #endregion
@@ -60,9 +80,7 @@ public class Player : MonoBehaviour
         {
             dir += new Vector3(1.0f, 0.0f, 0.0f);
         }
-
-        Debug.Log(dir);
-
+        
         ship.Move(this.gameObject, dir);
     }
 

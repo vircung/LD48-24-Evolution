@@ -10,6 +10,7 @@ namespace Assets.Scripts.Ship
     {
         public Hull(Vector3 pos)
         {
+            prefab = Resources.Load("Prefabs/Hull") as GameObject;
 
             position = pos;
             hp = 1;

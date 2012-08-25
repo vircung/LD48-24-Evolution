@@ -11,15 +11,13 @@ namespace Assets.Scripts.Ship
         public Engine(Vector3 pos)
             : base(pos)
         {
+            prefab = Resources.Load("Prefabs/Engine") as GameObject;
+
             isEngine = true;
-            direction = new Vector3(0.0f, 1.0f, 0.0f);
+            direction = Directions.Left | Directions.Right | Directions.Up | Directions.Down;
             type = HullTypes.Engine;
         }
 
-        public void Move()
-        {
-        }
-
-        public Vector3 direction { get; protected set; }
+        public Directions direction { get; protected set; }
     }
 }

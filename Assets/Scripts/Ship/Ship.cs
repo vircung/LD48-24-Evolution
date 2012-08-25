@@ -6,25 +6,24 @@ using UnityEngine;
 
 namespace Assets.Scripts.Ship
 {
-    class Ship
+    public class Ship
     {
 
         float speed = 1.0f;
         float maxSpeed = 20.0f;
         float minSpeed = 1.0f;
-        float speedIncrease = 0.01f;
+        float speedIncrease = 0.005f;
+        
+        public List<Hull> parts { get; set; }
 
         public Ship()
         {
-
-            prefab = Resources.Load("Prefabs/ShipPart") as GameObject;
-
             parts = new List<Hull>();
 
             parts.Add(new Hull(Vector3.zero));
             parts.Add(new Engine(new Vector3(0.0f, -1.0f, 0.0f)));
-            parts.Add(new Weapon(new Vector3(0.0f, 1.0f, 0.0f)));
-
+            parts.Add(new Weapon(new Vector3(1.0f, 0.0f, 0.0f)));
+            parts.Add(new Weapon(new Vector3(-1.0f, 0.0f, 0.0f)));
 
         }
 
@@ -37,16 +36,26 @@ namespace Assets.Scripts.Ship
                 if (part.type == HullTypes.Engine)
                 {
                     Engine eng = part as Engine;
-                    bool condition = (eng.direction.x == dir.x && dir.x != 0.0f) || (eng.direction.y == dir.y && dir.y != 0.0f);
-                    if (condition)
+
+                    if (dir.y > 0 && (eng.direction & Directions.Up) == Directions.Up)
                     {
-                        whereToMove += eng.direction;
+                        whereToMove.y += dir.y;
                     }
 
+                    if (dir.y < 0 && (eng.direction & Directions.Down) == Directions.Down)
+                    {
+                        whereToMove.y += dir.y;
+                    }
+                    if (dir.x > 0 && (eng.direction & Directions.Right) == Directions.Right)
+                    {
+                        whereToMove.x += dir.x;
+                    }
+                    if (dir.x < 0 && (eng.direction & Directions.Left) == Directions.Left)
+                    {
+                        whereToMove.x += dir.x;
+                    }
                 }
             }
-
-            Debug.Log(whereToMove);
 
             go.transform.Translate(whereToMove * speed * Time.deltaTime);
 
@@ -56,8 +65,21 @@ namespace Assets.Scripts.Ship
                 speed = minSpeed;
         }
 
-        public List<Hull> parts { get; protected set; }
+        public void DestroyPart(Hull part)
+        {
+            parts.Remove(part);
+        }
 
-        public GameObject prefab { get; protected set; }
+        public void Fire(Vector3 position)
+        {
+            foreach (Hull part in parts)
+            {
+                if (part.type == HullTypes.Weapon)
+                {
+                    Weapon wpn = part as Weapon;
+                    wpn.Fire(position);
+                }
+            }
+        }
     }
 }
