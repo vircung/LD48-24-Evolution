@@ -5,6 +5,8 @@ using Assets.Scripts;
 public class Enemy1 : MonoBehaviour
 {
     public Enemy enemy;
+    GameObject exp;
+    GameObject explodeParticle;
 
     Transform target;
     Vector3 direction = Vector3.zero;
@@ -16,6 +18,8 @@ public class Enemy1 : MonoBehaviour
     void Awake()
     {
         enemy = new Enemy();
+        exp = Resources.Load("Prefabs/PowerUps/Exp") as GameObject;
+        explodeParticle = Resources.Load("Particles/ExplodeParticle") as GameObject;
     }
 
     void Update()
@@ -30,7 +34,9 @@ public class Enemy1 : MonoBehaviour
 
     void OnDestroy()
     {
-
+        Instantiate(exp, transform.position, Quaternion.identity);
+        if (explodeParticle)
+            Instantiate(explodeParticle, transform.position, Quaternion.identity);
     }
 
     public IEnumerator SearchPlayer()

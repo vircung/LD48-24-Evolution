@@ -51,8 +51,10 @@
      <Compile Include="Assets\Scripts\Game\Player.cs" />
      <Compile Include="Assets\Scripts\Game\myCamera.cs" />
      <Compile Include="Assets\Scripts\Helpers\Enums.cs" />
-     <Compile Include="Assets\Scripts\PowerUp.cs" />
+     <Compile Include="Assets\Scripts\Helpers\ParticleDeathScript.cs" />
      <Compile Include="Assets\Scripts\PowerUps\Exp.cs" />
+     <Compile Include="Assets\Scripts\PowerUps\PwrUp.cs" />
+     <Compile Include="Assets\Scripts\PowerUps\PwrUpScript.cs" />
      <Compile Include="Assets\Scripts\Projectiles\ProjectileScript.cs" />
      <Compile Include="Assets\Scripts\Ship.cs" />
      <Compile Include="Assets\Scripts\ShipParts\Engine.cs" />

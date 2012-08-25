@@ -1,24 +1,36 @@
 using UnityEngine;
 using System.Collections;
 using Assets.Scripts.ShipParts;
+using Assets.Scripts;
 
 public class ShipCollision : MonoBehaviour
 {
 
     void OnTriggerEnter(Collider other)
     {
-        Player p = transform.parent.GetComponent<Player>();
-        Hull h = p.ship.map[this] as Hull;
+        Hull h = null;
+        Ship s = null;
 
-        if (other.tag == "Enemy")
+        s = gameObject.transform.parent.GetComponent<Player>().ship;
+
+        if (s != null)
         {
-
-            Enemy1 es = other.GetComponent<Enemy1>();
-            h.TakeDamage(es.enemy.damage);
+            h = s.map[gameObject] as Hull;
         }
-        else if (other.tag == "PowerUp")
-        {
 
-        }
+        if (h != null)
+            if (other.tag == "Enemy")
+            {
+                Enemy1 es = other.GetComponent<Enemy1>();
+                h.TakeDamage(es.enemy.damage);
+                Destroy(other.gameObject);
+            }
+            else if (other.tag == "PowerUp")
+            {
+                Debug.Log("POwerUp");
+                PwrUpScript pus = other.GetComponent<PwrUpScript>();
+                Debug.Log(pus);
+                pus.pwr.Action(h);
+            }
     }
 }

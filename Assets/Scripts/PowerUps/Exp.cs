@@ -3,21 +3,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Assets.Scripts.ShipParts;
+using UnityEngine;
 
 namespace Assets.Scripts.PowerUps
 {
-	class Exp
+	class Exp : PwrUp
 	{
-        int exp;
+        int amount = 5;
+        GameObject parent;
 
-        public Exp(int amount)
+        public Exp(GameObject par)
         {
-            exp = amount;
+            parent = par;
         }
 
         public void Give(Hull part)
         {
-            part.TakeExp(exp);
+            part.TakeExp(amount);
         }
-	}
+
+        public void Take(Hull part)
+        {
+            return;
+        }
+
+        public void Action(Hull part)
+        {
+            Give(part);
+            GameObject.Destroy(parent);
+        }
+    }
 }

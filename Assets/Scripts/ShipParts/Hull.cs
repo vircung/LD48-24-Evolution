@@ -15,6 +15,8 @@ namespace Assets.Scripts.ShipParts
         {
             prefab = Resources.Load("Prefabs/Hull") as GameObject;
 
+            id = Ship.partId++;
+
             ship = s;
             position = pos;
             hp = 1;
@@ -25,7 +27,7 @@ namespace Assets.Scripts.ShipParts
 
         }
 
-        public void TakeExp(int howMuch)
+        public void     TakeExp(int howMuch)
         {
             exp += howMuch;
             LevelUp();
@@ -63,7 +65,9 @@ namespace Assets.Scripts.ShipParts
 
         internal void Destroy()
         {
-            throw new NotImplementedException();
+            ship.parts.Remove(this);
         }
+
+        public int id { get; protected set; }
     }
 }

@@ -29,9 +29,11 @@ namespace Assets.Scripts.ShipParts
             //pos.z = 0.0f;
             //pos.x -= 0.5f;
             //pos.y += 0.5f;
-            GameObject go = GameObject.Instantiate(projectilePrefab, pos + position, Quaternion.identity) as GameObject;
-            ProjectileScript ps = go.GetComponent<ProjectileScript>();
-            ps.SetDirection(direction);
+            GameObject p_instance = GameObject.Instantiate(projectilePrefab, pos + position, Quaternion.identity) as GameObject;
+            ProjectileScript ps = p_instance.GetComponent("ProjectileScript") as ProjectileScript;
+            ps.speed = (1 + level) * 10;
+            ps.direction = direction;
+
         }
     }
 }

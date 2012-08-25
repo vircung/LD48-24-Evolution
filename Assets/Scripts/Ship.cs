@@ -10,12 +10,13 @@ namespace Assets.Scripts
 {
     public class Ship
     {
+        public static int partId = 0;
 
         int size = 5;
 
         float speed = 1.0f;
         float maxSpeed = 20.0f;
-        float minSpeed = 1.0f;
+        float minSpeed = 5.0f;
         float speedIncrease = 0.005f;
 
         public List<Hull> parts { get; set; }
@@ -25,6 +26,7 @@ namespace Assets.Scripts
         public Ship()
         {
             parts = new List<Hull>();
+            map = new Hashtable();
 
             parts.Add(new Hull(Vector3.zero, this));
             parts.Add(new Engine(new Vector3(0.0f, -1.0f, 0.0f), this));
@@ -110,8 +112,15 @@ namespace Assets.Scripts
         {
             if (map.ContainsValue(part))
             {
-                GameObject go = map[part] as GameObject;
-                DestroyPart(go);
+                foreach (DictionaryEntry de in map)
+                {
+                    if (de.Value == part)
+                    {
+                        GameObject go = de.Key as GameObject;
+                        DestroyPart(go);
+                        return;
+                    }
+                }
             }
         }
 

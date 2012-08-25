@@ -23,14 +23,15 @@ public class Player : MonoBehaviour
     void Awake()
     {
         ship = new Ship();
-
         map = new Hashtable();
+
         foreach (Hull part in ship.parts)
         {
             GameObject go = Instantiate(part.prefab, part.position, Quaternion.identity) as GameObject;
 
             go.transform.parent = gameObject.transform;
-            map.Add(go, part);
+            ship.AddPart(go, part);
+            Debug.Log(go.GetInstanceID() + " " + part);
         }
     }
     

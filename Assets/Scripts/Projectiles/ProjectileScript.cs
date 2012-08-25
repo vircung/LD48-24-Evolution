@@ -4,20 +4,20 @@ using Assets.Scripts.Amunition;
 
 public class ProjectileScript : MonoBehaviour
 {
-    private Vector3 direction;
-    private float speed;
-
     Projectile projectile;
 
-    void Start()
+
+    void Awake()
     {
         projectile = new Projectile();
-        speed = projectile.speed;
+    }
+    void Start()
+    {
     }
 
     void Update()
     {
-        transform.Translate(direction * speed * Time.deltaTime, Space.World);
+        transform.Translate(direction * speed * Time.deltaTime);
 
         Vector3 onScreenPosition = Camera.main.WorldToScreenPoint(transform.position);
 
@@ -37,13 +37,7 @@ public class ProjectileScript : MonoBehaviour
         }
     }
 
-    public void SetDirection(Vector3 dir)
-    {
-        direction = dir;
-    }
+    public int speed { get; set; }
 
-    public void SetSpeed(float spd)
-    {
-        speed = spd;
-    }
+    public Vector3 direction { get; set; }
 }
