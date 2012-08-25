@@ -1,15 +1,22 @@
 using UnityEngine;
 using System.Collections;
+using Assets.Scripts;
 
 public class Enemy1 : MonoBehaviour
 {
+    public Enemy enemy;
 
-    public Transform target;
-    public Vector3 direction = Vector3.zero;
+    Transform target;
+    Vector3 direction = Vector3.zero;
     float distance = 0.0f;
 
     float searchTimer = 0.1f;
     bool canSearch = true;
+
+    void Awake()
+    {
+        enemy = new Enemy();
+    }
 
     void Update()
     {
@@ -17,9 +24,13 @@ public class Enemy1 : MonoBehaviour
 
         if (target != null)
         {
-            Debug.Log("Got player");
             transform.Translate(direction.normalized * Time.deltaTime, Space.World);
         }
+    }
+
+    void OnDestroy()
+    {
+
     }
 
     public IEnumerator SearchPlayer()
@@ -46,6 +57,7 @@ public class Enemy1 : MonoBehaviour
                 distance = dist;
                 target = trg.transform;
                 direction = target.position - transform.position;
+                transform.up = direction;
             }
         }
     }

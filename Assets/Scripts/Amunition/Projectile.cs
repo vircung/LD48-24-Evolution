@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-using Assets.Scripts.Ship;
+using Assets.Scripts.ShipParts;
 
 namespace Assets.Scripts.Amunition
 {
@@ -13,6 +13,7 @@ namespace Assets.Scripts.Amunition
         public Projectile()
         {
             prefab = Resources.Load("Prefabs/Amunition/Projectile1") as GameObject;
+            dmg = 3;
             speed = 5.0f;
         }
 
@@ -27,6 +28,6 @@ namespace Assets.Scripts.Amunition
         public Vector3 position { get; protected set; }
         public Vector3 direction { get; protected set; }
         public float speed { get; protected set; }
-
+        public int dmg { get; protected set; }
     }
 }

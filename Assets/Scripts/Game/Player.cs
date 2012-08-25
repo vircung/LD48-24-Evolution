@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
-using Assets.Scripts.Ship;
+using Assets.Scripts.ShipParts;
+using Assets.Scripts;
 
 public class Player : MonoBehaviour
 {
@@ -35,6 +36,7 @@ public class Player : MonoBehaviour
     
     void Update()
     {
+        Debug.DrawRay(transform.position, Vector3.up, Color.magenta, 1.0f);
         MovePlayer();
 
         if (Input.GetKeyUp(KeyCode.Space))

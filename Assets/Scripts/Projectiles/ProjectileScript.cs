@@ -1,14 +1,18 @@
 using UnityEngine;
 using System.Collections;
+using Assets.Scripts.Amunition;
 
 public class ProjectileScript : MonoBehaviour
 {
     private Vector3 direction;
     private float speed;
 
+    Projectile projectile;
+
     void Start()
     {
-        Debug.Log(transform.position);
+        projectile = new Projectile();
+        speed = projectile.speed;
     }
 
     void Update()
@@ -25,10 +29,10 @@ public class ProjectileScript : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Trigger !!");
         if (other.tag == "Enemy")
         {
-            Destroy(other.gameObject);
+            Enemy1 es = other.GetComponent<Enemy1>();
+            es.enemy.TakeDamage(projectile.dmg);
             Destroy(gameObject);
         }
     }
