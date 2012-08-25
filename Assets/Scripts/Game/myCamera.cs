@@ -3,7 +3,7 @@ using System.Collections;
 
 public class myCamera : MonoBehaviour {
 
-    string buildNumber = "0.0.2";
+    string buildNumber = "0.0.3";
 
     int lineHeight = 25;
 
